@@ -53,7 +53,7 @@
 
     .buttons {
       position: relative;
-      height: 70px;
+      height: 70px; /* HARD BOUNDARY */
     }
 
     button {
@@ -145,15 +145,16 @@
     const ctx = canvas.getContext('2d');
 
     function moveNoButton() {
-      const card = noBtn.closest('.card');
-      const cardRect = card.getBoundingClientRect();
+      const container = noBtn.parentElement; // .buttons
+      const rect = container.getBoundingClientRect();
 
-      const padding = 4;
-      const maxX = cardRect.width - noBtn.offsetWidth - padding;
-      const maxY = cardRect.height - noBtn.offsetHeight - padding - 50;
+      const padding = 8;
+
+      const maxX = rect.width - noBtn.offsetWidth - padding;
+      const maxY = rect.height - noBtn.offsetHeight - padding;
 
       const x = Math.random() * maxX + padding / 2;
-      const y = Math.random() * maxY + padding / 2 + 50;
+      const y = Math.random() * maxY + padding / 2;
 
       noBtn.style.left = x + 'px';
       noBtn.style.top = y + 'px';
@@ -161,7 +162,7 @@
 
     noBtn.addEventListener('mouseenter', moveNoButton);
     noBtn.addEventListener('mousemove', moveNoButton);
-    noBtn.addEventListener('touchstart', (e) => {
+    noBtn.addEventListener('touchstart', e => {
       e.preventDefault();
       moveNoButton();
     });
